@@ -1,0 +1,26 @@
+# Every template YAML file must begin with a `spec`, without which your template won't compile.
+spec:
+  templates:
+  - name: welcome-to-orquestra
+    parent: generic-task
+    inputs:
+      # `parameters` represent initialization values for a template.
+      parameters:
+
+      # The `command` parameter is required because that is what is run by `generic-task`.
+      - name: command
+        value: python3 main.py
+        
+      artifacts:
+      - name: main-script
+        path: /app/main.py
+        raw:
+          data: |
+            from orquestra import welcome
+            welcome()
+            
+    # This section is where output artifacts are listed. They must be listed here, or else they will get deleted when the template completes. They must be under the `app` directory in order to be saved.
+    outputs:
+      artifacts:
+      - name: welcome
+        path: /app/welcome.json
